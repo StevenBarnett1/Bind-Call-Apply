@@ -1,4 +1,4 @@
-# Bind
+git # Bind
 
 - returns a new function, when invoked, has its this sets to a specific value.
 
