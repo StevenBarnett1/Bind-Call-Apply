@@ -27,6 +27,12 @@ class Cursor {
   }
 
   down() {
+    Screen.addCommand('down', 'Move down', () => {
+      if(this.col < 3) this.col ++
+      else this.col = 0
+    })
+    console.log('COMMANDS', Screen.printCommands())
+
     // Move cursor down
   }
 
