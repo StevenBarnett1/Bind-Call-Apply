@@ -23,25 +23,21 @@ class Cursor {
   }
 
   up() {
-    // Move cursor up
+    if (this.row > 0) this.row--
   }
 
   down() {
-    Screen.addCommand('down', 'Move down', () => {
-      if(this.col < 3) this.col ++
-      else this.col = 0
-    })
-    console.log('COMMANDS', Screen.printCommands())
+      if(this.row < 2) this.row++
 
     // Move cursor down
   }
 
   left() {
-    // Move cursor left
+    if (this.col >0 ) this.col--
   }
 
   right() {
-    // Move cursor right
+    if(this.col <2) this.col++
   }
 
 }

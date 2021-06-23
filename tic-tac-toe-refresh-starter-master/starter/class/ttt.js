@@ -28,7 +28,52 @@ class TTT {
     console.log("TEST COMMAND");
   }
 
+  static playerWinHorizontal(){
+
+    if ((this.grid[0][0] === this.grid[0][1] &&
+      this.grid[0][1] === this.grid[0][2]) || (this.grid[1][0] ===
+        this.grid[1][1] && this.grid[1][2] === this.grid[1][1]) || this.grid[2][0] === this.grid[2][1] &&
+      this.grid[2][2] === this.grid[2][1]) return this.grid[1][1]
+    return false
+  }
+
+  static playerWinVertical() {
+    for(let i =0;i<3;i++){
+      if ((this.grid[1][0] === this.grid[0][0] &&
+        this.grid[2][0] === this.grid[1][0]) || (this.grid[1][0] ===
+          this.grid[1][1] && this.grid[2][1] === this.grid[1][1]) || this.grid[0][2] === this.grid[1][2] &&
+        this.grid[2][2] === this.grid[2][1])
+    }
+
+    return false
+  }
+
+  static fullBoard(){
+
+    this.grid.forEach(row => {
+      let count = 0
+      row.forEach(ele => {
+        if (ele === mark) count++
+      })
+      if (count === 3) return true
+    })
+    return false
+  }
+
+  static playerWinDiagonal() {
+    if(!this.grid[1][1])return false
+
+    if((this.grid[1][1] === this.grid[0][0] &&
+      this.grid[1][1] === this.grid[2][2]) || (this.grid[2][0] ===
+        this.grid[1][1] && this.grid[0][2] === this.grid[1][1])) return this.grid[1][1]
+      return false
+  }
+
   static checkWin(grid) {
+    if(TTT.playerWinHorizontal("X") || TTT.playerWinVertical("X")) return "X"
+    if(TTT.playerWinHorizontal("O") || TTT.playerWinVertical("O")) return "O"
+    if (TTT.playerWinDiagonal()) return TTT.playerWinDiagonal()
+
 
     // Return 'X' if player X wins
     // Return 'O' if player O wins
