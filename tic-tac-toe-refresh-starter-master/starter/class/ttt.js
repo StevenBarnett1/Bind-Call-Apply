@@ -28,58 +28,60 @@ class TTT {
     console.log("TEST COMMAND");
   }
 
-  static playerWinHorizontal(){
-
-    if ((this.grid[0][0] === this.grid[0][1] &&
-      this.grid[0][1] === this.grid[0][2]) || (this.grid[1][0] ===
-        this.grid[1][1] && this.grid[1][2] === this.grid[1][1]) || this.grid[2][0] === this.grid[2][1] &&
-      this.grid[2][2] === this.grid[2][1]) return this.grid[1][1]
-    return false
-  }
-
-  static playerWinVertical() {
-    for(let i =0;i<3;i++){
-      if ((this.grid[1][0] === this.grid[0][0] &&
-        this.grid[2][0] === this.grid[1][0]) || (this.grid[1][0] ===
-          this.grid[1][1] && this.grid[2][1] === this.grid[1][1]) || this.grid[0][2] === this.grid[1][2] &&
-        this.grid[2][2] === this.grid[2][1])
+  static playerWinVertical(grid){
+    for (let row = 0 ; row < 3 ; row++) {
+    if (grid[row][0] !== ' ' &&
+        grid[row][0] === grid[row][1] &&
+        grid[row][0] === grid[row][2])
+        {
+      return grid[row][0]
     }
-
-    return false
+  }
   }
 
-  static fullBoard(){
+  static playerWinHorizontal(grid) {
+    for (let col = 0 ; col < 3 ; col++) {
+    if (grid[0][col] !== ' ' &&
+        grid[0][col] === grid[1][col] &&
+        grid[0][col] === grid[2][col])
+    {
+      return grid[0][col];
+    }
+  }
+  }
 
-    this.grid.forEach(row => {
-      let count = 0
+  static fullBoard(grid){
+    let valid = true
+    grid.forEach(row => {
       row.forEach(ele => {
-        if (ele === mark) count++
-      })
-      if (count === 3) return true
+      if (ele === ' ') valid = false})
     })
-    return false
+    return valid
   }
 
-  static playerWinDiagonal() {
-    if(!this.grid[1][1])return false
+  static playerWinDiagonal(grid) {
+    if(grid[1][1] === ' ') return false
 
-    if((this.grid[1][1] === this.grid[0][0] &&
-      this.grid[1][1] === this.grid[2][2]) || (this.grid[2][0] ===
-        this.grid[1][1] && this.grid[0][2] === this.grid[1][1])) return this.grid[1][1]
+    if((grid[1][1] === grid[0][0] &&
+      grid[1][1] === grid[2][2]) || (grid[2][0] ===
+        grid[1][1] && grid[0][2] === grid[1][1])) return grid[1][1]
       return false
   }
 
   static checkWin(grid) {
-    if(TTT.playerWinHorizontal("X") || TTT.playerWinVertical("X")) return "X"
-    if(TTT.playerWinHorizontal("O") || TTT.playerWinVertical("O")) return "O"
-    if (TTT.playerWinDiagonal()) return TTT.playerWinDiagonal()
+    //console.log('THERE IS NO WINNER', grid)
 
+    if (!TTT.playerWinDiagonal(grid) && !TTT.playerWinHorizontal(grid) &&
+    !TTT.playerWinVertical(grid) && TTT.fullBoard(grid)) return 'T'
 
+    if (TTT.playerWinDiagonal(grid)) return TTT.playerWinDiagonal(grid)
+    if (TTT.playerWinHorizontal(grid)) return TTT.playerWinHorizontal(grid)
+    if (TTT.playerWinVertical(grid)) return TTT.playerWinVertical(grid)
     // Return 'X' if player X wins
     // Return 'O' if player O wins
     // Return 'T' if the game is a tie
     // Return false if the game has not ended
-
+    return false
   }
 
   static endGame(winner) {
